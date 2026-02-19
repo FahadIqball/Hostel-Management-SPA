@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Hostel Management System — Manage rooms, students, fees, complaints, visitors, attendance and announcements.">
+  <title>Hostel Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+  <!-- ═══ LOGIN SCREEN ═══ -->
+  <div id="login-screen" class="login-container">
+    <div class="login-box">
+      <div class="login-brand">
+        <span class="login-logo">🏨</span>
+        <h2>Hostel Management</h2>
+        <p>Sign in to your dashboard</p>
+      </div>
+      <form id="login-form">
+        <div class="form-group">
+          <label for="login-username">Username</label>
+          <input type="text" id="login-username" placeholder="Enter username" required>
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" placeholder="Enter password" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="login-btn">Sign In</button>
+        <p id="login-error" class="error-text" style="color:var(--danger-text);margin-top:1rem;text-align:center"></p>
+      </form>
+
+      <div id="register-toggle" class="register-toggle">
+        <span id="toggle-text">Student?</span>
+        <a href="#" id="toggle-link"
+          style="color:var(--primary-color);font-weight:600;text-decoration:none;margin-left:0.5rem">Register Here</a>
+      </div>
+
+      <!-- Student Registration Form -->
+      <form id="register-form" style="display:none; margin-top:1.5rem">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="reg-fullname" placeholder="John Doe" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Username</label>
+            <input type="text" id="reg-username" placeholder="johndoe" required>
+          </div>
+          <div class="form-group">
+            <label>Roll No</label>
+            <input type="text" id="reg-roll" placeholder="CS-2024-001" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="reg-email" placeholder="john@example.com" required>
+        </div>
+        <div class="form-group">
+          <label>Contact</label>
+          <input type="text" id="reg-contact" placeholder="Pending approval" required>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="reg-password" placeholder="Create password" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Register Account</button>
+        <div class="register-toggle" style="margin-top:1.5rem;text-align:center">
+          <a href="#" id="back-to-login" style="color:var(--text-secondary);font-size:0.9rem;text-decoration:none">Back
+            to Login</a>
+        </div>
+        <p id="register-error" class="error-text" style="color:var(--danger-text);margin-top:1rem;text-align:center">
+        </p>
+        <p id="register-success" class="success-text"
+          style="color:var(--success-text);margin-top:1rem;text-align:center"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ═══ MAIN APP SHELL ═══ -->
+  <div id="app-shell" class="app-shell" style="display:none">
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <span class="nav-icon" style="color:var(--primary-color)">🏨</span>
+        <span>HMS Premium</span>
+      </div>
+      <nav class="sidebar-nav">
+        <!-- Common -->
+        <a href="#dashboard" class="nav-item admin-only" data-page="dashboard">
+          <span class="nav-icon">📊</span>
+          <span>Dashboard</span>
+        </a>
+        <a href="#student-dashboard" class="nav-item student-only" data-page="student-dashboard" style="display:none">
+          <span class="nav-icon">🏠</span>
+          <span>My Dashboard</span>
+        </a>
+
+        <!-- Admin / Warden -->
+        <div class="nav-divider admin-only"></div>
+        <a href="#students" class="nav-item admin-only" data-page="students">
+          <span class="nav-icon">👨‍🎓</span>
+          <span>Students</span>
+        </a>
+        <a href="#rooms" class="nav-item admin-only" data-page="rooms">
+          <span class="nav-icon">🏢</span>
+          <span>Rooms</span>
+        </a>
+        <a href="#approvals" class="nav-item admin-only" data-page="approvals">
+          <span class="nav-icon">✅</span>
+          <span>Approvals</span>
+        </a>
+        <a href="#fees" class="nav-item admin-only" data-page="fees">
+          <span class="nav-icon">💰</span>
+          <span>Fees</span>
+        </a>
+        <a href="#complaints" class="nav-item admin-only" data-page="complaints">
+          <span class="nav-icon">📝</span>
+          <span>Complaints</span>
+        </a>
+        <a href="#visitors" class="nav-item admin-only" data-page="visitors">
+          <span class="nav-icon">🚪</span>
+          <span>Visitors</span>
+        </a>
+        <a href="#attendance" class="nav-item admin-only" data-page="attendance">
+          <span class="nav-icon">📋</span>
+          <span>Attendance</span>
+        </a>
+
+        <!-- Student Features -->
+        <div class="nav-divider student-only" style="display:none"></div>
+        <a href="#my-fees" class="nav-item student-only" data-page="my-fees" style="display:none">
+          <span class="nav-icon">💳</span>
+          <span>My Fees</span>
+        </a>
+        <a href="#my-attendance" class="nav-item student-only" data-page="my-attendance" style="display:none">
+          <span class="nav-icon">📅</span>
+          <span>My Attendance</span>
+        </a>
+        <a href="#my-complaints" class="nav-item student-only" data-page="my-complaints" style="display:none">
+          <span class="nav-icon">🛠️</span>
+          <span>My Complaints</span>
+        </a>
+        <a href="#gate-passes" class="nav-item student-only" data-page="gate-passes" style="display:none">
+          <span class="nav-icon">🎫</span>
+          <span>Gate Pass</span>
+        </a>
+        <a href="#room-transfers" class="nav-item student-only" data-page="room-transfers" style="display:none">
+          <span class="nav-icon">🛏️</span>
+          <span>Room Transfer</span>
+        </a>
+        <a href="#my-mess" class="nav-item student-only" data-page="my-mess" style="display:none">
+          <span class="nav-icon">🍽️</span>
+          <span>My Mess</span>
+        </a>
+        <a href="#clearance-student" class="nav-item student-only" data-page="clearance-student" style="display:none">
+          <span class="nav-icon">📜</span>
+          <span>Clearance</span>
+        </a>
+
+        <div class="nav-divider"></div>
+
+        <a href="#announcements" class="nav-item" data-page="announcements">
+          <span class="nav-icon">📢</span>
+          <span>Notices</span>
+        </a>
+        <a href="#polls" class="nav-item" data-page="polls">
+          <span class="nav-icon">🗳️</span>
+          <span>Polls</span>
+        </a>
+
+        <!-- Shared Admin Links -->
+        <a href="#gate-passes-admin" class="nav-item admin-only" data-page="gate-passes">
+          <span class="nav-icon">🎫</span>
+          <span>Gate Passes</span>
+        </a>
+        <a href="#room-transfers-admin" class="nav-item admin-only" data-page="room-transfers">
+          <span class="nav-icon">🛏️</span>
+          <span>Transfer Req</span>
+        </a>
+        <a href="#clearance-admin" class="nav-item admin-only" data-page="clearance-admin">
+          <span class="nav-icon">📜</span>
+          <span>Student Clearance</span>
+        </a>
+
+        <a href="#mess-menu" class="nav-item" data-page="mess-menu">
+          <span class="nav-icon">🍽️</span>
+          <span>Mess Menu</span>
+        </a>
+        <a href="#mess-admin" class="nav-item admin-only" data-page="mess-admin">
+          <span class="nav-icon">📊</span>
+          <span>Mess Admin</span>
+        </a>
+        <a href="#emergency" class="nav-item" data-page="emergency">
+          <span class="nav-icon">🆘</span>
+          <span>Emergency</span>
+        </a>
+
+        <div class="nav-divider admin-only"></div>
+
+        <a href="#inventory" class="nav-item admin-only" data-page="inventory">
+          <span class="nav-icon">📦</span>
+          <span>Inventory</span>
+        </a>
+        <a href="#users" class="nav-item admin-only" data-page="users">
+          <span class="nav-icon">👥</span>
+          <span>User Mgmt</span>
+        </a>
+        <a href="#reports" class="nav-item admin-only" data-page="reports">
+          <span class="nav-icon">📊</span>
+          <span>Reports</span>
+        </a>
+        <a href="#activity-log" class="nav-item admin-only" data-page="activity-log">
+          <span class="nav-icon">📜</span>
+          <span>Activity Log</span>
+        </a>
+        <a href="#settings" class="nav-item" data-page="settings">
+          <span class="nav-icon">⚙️</span>
+          <span>Settings</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main-content">
+      <!-- Top bar -->
+      <header class="topbar">
+        <div style="display:flex;align-items:center;gap:1rem">
+          <button id="sidebar-toggle" class="btn btn-ghost btn-sm">☰</button>
+          <h2 id="page-title" class="page-title">Dashboard</h2>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.5rem">
+          <div id="notifications-bell" style="position:relative"></div>
+          <button id="theme-toggle" class="btn btn-ghost btn-sm" title="Toggle Theme">🌙</button>
+          <span id="user-display"
+            style="font-size:0.9rem;font-weight:500;margin:0 1rem;color:var(--text-secondary)"></span>
+          <button id="logout-btn" class="btn btn-sm btn-ghost" style="color:var(--danger-text)">Logout</button>
+        </div>
+      </header>
+
+      <!-- Page content injected here -->
+      <div id="page-content" class="content-area"></div>
+    </main>
+  </div>
+
+  <!-- ═══ MODAL CONTAINER ═══ -->
+  <div id="modal-overlay" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modal-title">Modal</h3>
+        <button id="modal-close" class="btn btn-sm btn-ghost"
+          style="font-size:1.5rem;padding:0;line-height:1">&times;</button>
+      </div>
+      <div id="modal-body" class="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- ═══ TOAST CONTAINER ═══ -->
+  <div id="toast-container"></div>
+
+  <!-- JS Modules -->
+  <script src="/js/api.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/dashboard.js"></script>
+  <script src="/js/rooms.js"></script>
+  <script src="/js/students.js"></script>
+  <script src="/js/fees.js"></script>
+  <script src="/js/complaints.js"></script>
+  <script src="/js/visitors.js"></script>
+  <script src="/js/attendance.js"></script>
+  <script src="/js/announcements.js"></script>
+  <script src="/js/users.js"></script>
+  <script src="/js/allocation.js"></script>
+  <script src="/js/settings.js"></script>
+  <!-- Phase 3 Modules -->
+  <script src="/js/student-dashboard.js"></script>
+  <script src="/js/my-fees.js"></script>
+  <script src="/js/my-attendance.js"></script>
+  <script src="/js/my-complaints.js"></script>
+  <script src="/js/gate-pass.js"></script>
+  <script src="/js/room-transfers.js"></script>
+  <script src="/js/mess-menu.js"></script>
+  <script src="/js/emergency.js"></script>
+  <script src="/js/approvals.js"></script>
+  <script src="/js/inventory.js"></script>
+  <script src="/js/mess-manage.js"></script>
+  <script src="/js/clearance.js"></script>
+  <script src="/js/polls.js"></script>
+  <script src="/js/notifications.js"></script>
+  <script src="/js/activity-log.js"></script>
+</body>
+
+</html>
