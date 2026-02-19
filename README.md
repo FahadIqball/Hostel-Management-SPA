@@ -177,5 +177,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 <div align="center">
-  <sub>Built with ❤️ by the Antigravity Team</sub>
+  <sub>Built with ❤️ by Fahad Iqbal</sub>
 </div>
